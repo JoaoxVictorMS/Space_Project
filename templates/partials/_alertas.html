@@ -1,0 +1,16 @@
+<!-- Verifica se existe mensagens -->
+{% if messages %}
+    <!-- A mensagem irá aparecer graças a essa estrutura -->
+    {% for message in messages %}
+    <!-- Graças as tags de mensagens fornecidas pelo Django(Encontradas em setup/settings), é possível exibir as mensagens de forma dinâmica,
+    ou seja, mudar a mensagem conforme a tag da mesma, podendo ser 'error' ou 'success', por exemplo -->
+    <!-- Por isso que trocou-se a tag 'primary' por uma estrutura em python, pois assim as mensagens aparecem
+    de forma dinâmica -->
+    <!-- Mas esta estrutura não é o bastante. A parte primordial para isso funcionar está na views.py de usuarios
+    , pois lá cada view possui as mensagens de erro e ou sucesso sendo explícitas por: .error ou .success. Assim o Django 
+    sabe quando puxar a tag correspondente, localizada em settings.py, para o html -->
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}

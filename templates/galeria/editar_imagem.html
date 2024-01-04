@@ -1,0 +1,33 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+</head>
+
+            <section class="galeria" style="margin-left: 5em">
+                <!-- O enctype define qual tipo de dado a aplicação está lidando nesse caso, imagens -->
+                <!-- O foto_id faz referência ao int:foto_id do path dessa página html e ao dicionário da view dessa mesma página -->
+                <form action="{% url 'editar_imagem' foto_id %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form.visible_fields %}
+                        <div class="col-12 col-lg-12" style="margin-bottom: 10px;">
+                            <label for="{{ field.id_for_label }}" style="color:#D9D9D9; margin-bottom: 5px;">{{field.label}}</label>
+                            {{ field }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-success col-12" style="padding: top 5px;">Editar fotografia</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+
+{% endblock %}

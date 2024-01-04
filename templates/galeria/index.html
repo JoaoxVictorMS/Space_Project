@@ -1,0 +1,70 @@
+<!-- A propiedade abaixo referencia ao arquivo base, o base.html. Lá fica todo o código que será usado em duas ou mais páginas  -->
+{% extends 'shared/base.html' %}
+<!-- propiedade usada para 'embedar' código pyhton dentro do HTML -->
+<!-- Abaixo ele carrega arquivos estáticos -->
+{% load static %}
+<!-- A propiedade -->
+{% block content %}   
+<section class="conteudo">
+    <section class="banner">
+        <img class="banner__imagem" src="{% static 'assets/imagens/Banner(2).png' %}" alt="banner Alura Space">
+        <h1 class="banner__titulo"> A galeria mais completa de fotos do espaço!</h1>
+    </section>
+    <section class="tags">
+        <p class="tags__titulo">Busque por tags:</p>
+        <ul class="tags__lista">
+            <!-- A 'NEBULOSA' refere-se as opções de categoria localizada no models de galeria -->
+            <li class="tags__tag"><a href="{% url 'filtro' 'NEBULOSA' %}" class="btn" style="color: #c9c9c9;">Nebulosa</a></li>
+            <li class="tags__tag"><a href="{% url 'filtro' 'ESTRELA' %}" class="btn" style="color: #c9c9c9;">Estrela</a></li>
+            <li class="tags__tag"><a href="{% url 'filtro' 'GALÁXIA' %}" class="btn" style="color: #c9c9c9;">Galáxia</a></li>
+            <li class="tags__tag"><a href="{% url 'filtro' 'PLANETA' %}" class="btn" style="color: #c9c9c9;">Planeta</a></li>
+            <li class="tags__tag">Geral</li>
+        </ul>
+    </section>
+    <section class="galeria">
+        <div class="cards">
+            <h2 class="cards__titulo">Navegue pela galeria</h2>
+            <ul class="cards__lista">
+<!-- Esta nova estrutura (A antiga estrutura esta no Notion, na aula Django: persistência de dados e Admin) irá checar se são realmente os cards que estão sendo recebidos, se não for um card, nada será mostrado -->
+                {% if cards %}
+                {% for fotografia in cards %}
+                <li class="card">
+<!-- Colocando o fotografia.id, os dados da imagem serão enviadas, através de url, para a url da imagem, no arquivo urls.py -->
+                    <a href="{% url 'imagem' fotografia.id %}">
+<!-- Caso não haja nenhuma informação, no caso uma foto, dentro de fotografia.foto, será colcoada uma imagem defualt, falando que não há uma imagem -->
+                    {% if fotografia.foto == "" or fotografia.foto == null %}
+<!-- A estrutura fotografia.foto, ira mostrar a foto em si, que aparecem nos cards da index.html-->
+                        <img class="card__imagem" src="{% static 'assets/imagens/galeria/no_image.jpg'%}{{ fotografia.foto }}" alt="foto">
+<!-- Caso haja alguma informação, no caso uma foto, a mesma será mostrada normalmente -->
+                    {% else %}
+                        <img class="card__imagem" src="{{ fotografia.foto.url }}" alt="foto">
+                    {% endif %}
+                    </a>
+                    <span class="card__tag">Estrelas</span>
+                    <div class="card__info">
+<!-- As duas estruturas abaixo 'capturam' as informações de cada imagem, no caso o nome e descrição -->
+                        <p class="card__titulo">{{ fotografia.nome }}</p>
+                        <div class="card__texto">
+                            <p class="card__descricao">{{ fotografia.legenda }}</p>
+                            <span>
+                                <img src="{% static 'assets/ícones/1x/favorite_outline.png' %}" alt="ícone de coração">
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+<!-- Caso não encontre nenhuma fotografia, será mostrada a mensagem abaixo -->
+                {% else %}
+                <div class="imagem__texto">
+                    <p>Fotografias não encontradas</p>
+                </div>
+                {% endif %}
+            </ul>
+        </div>
+    </section>
+</section>
+<!-- Essas duas tegs 'main' e 'div' deverão ser colocadas para o estilo do site ficar certinho. Não sei o motivo mas tem :D -->
+</main>
+</div>
+
+{% endblock %}
