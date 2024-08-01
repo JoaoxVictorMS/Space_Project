@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path, os
 # dotenv é um módulo usado para criar e gerenciar as variáveis de ambiente
-# Deste mesme módulo, importe a função load_dotenv, para carregar as variáveis de ambiente, assim sendo possível trabalhar com elas
+# Deste mesmo módulo, importe a função load_dotenv para carregar as variáveis de ambiente, assim sendo possível trabalhar com elas
 from dotenv import load_dotenv
 
 # Carrega as varáveis de ambiente, chamando a função importada
