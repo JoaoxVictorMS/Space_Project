@@ -70,7 +70,7 @@ def cadastro(request):
                 messages.error(request, "Usuário já existe")
                 return redirect('cadastro')
             
-            # Criação do usuário com as informações colcadas pelo mesmo e depois salvas pelo usuarios.save()
+            # Criação do usuário com as informações colocadas pelo mesmo e depois salvas pelo usuarios.save()
             usuario = User.objects.create_user(
                 username=nome,
                 email=email,
